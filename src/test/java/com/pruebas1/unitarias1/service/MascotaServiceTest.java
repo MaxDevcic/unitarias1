@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MascotaServiceTest {
 
-    @Mock
+    @Mock /*Maqueta de algo, réplica del asunto*/
     private MascotaRepository mascotaRepository;
 
-    @InjectMocks
+    @InjectMocks /*Instancia */
     private MascotaService mascotaService;
 
     @BeforeEach
@@ -38,6 +38,9 @@ class MascotaServiceTest {
 
         Mascota resultado = mascotaService.guardarMascota(mascota);
         assertThat(resultado.getId()).isEqualTo(1L);
+        assertThat(resultado.getNombre()).isEqualTo("Rex");
+        assertThat(resultado.getTipo()).isEqualTo("Perro");
+        assertThat(resultado.getEdad()).isEqualTo(5);
         verify(mascotaRepository).save(mascota);
     }
 }
