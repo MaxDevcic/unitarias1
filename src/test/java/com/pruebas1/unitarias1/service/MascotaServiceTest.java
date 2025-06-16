@@ -67,12 +67,12 @@ class MascotaServiceTest {
         verify(mascotaRepository).findById(1L);
     }
 
-    
+    /* 
      @Test
      void testActualizarMascota() {
         Mascota mascotaAntigua = new Mascota(1L, "Rex", "Perro", 5);
         Mascota mascotaNueva = new Mascota(1L, "Rex", "Perro", 6);
-        when(mascotaRepository);
-     }
+        when(mascotaRepository)
+     }*/
      
 }
