@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,12 +68,28 @@ class MascotaServiceTest {
         verify(mascotaRepository).findById(1L);
     }
 
-    /* 
+    
      @Test
      void testActualizarMascota() {
         Mascota mascotaAntigua = new Mascota(1L, "Rex", "Perro", 5);
-        Mascota mascotaNueva = new Mascota(1L, "Rex", "Perro", 6);
-        when(mascotaRepository)
-     }*/
+        Mascota mascotaNueva = new Mascota(1L, "Bruno", "Perro", 6);
+        when(mascotaRepository.findById(mascotaAntigua.getId())).thenReturn(Optional.of(mascotaNueva));
+        when(mascotaRepository.save(any(Mascota.class))).thenAnswer(i -> i.getArgument(0));
+
+        Mascota resultado = mascotaService.actualizarMascota(mascotaAntigua.getId(), mascotaNueva);
+        assertThat(resultado.getId()).isEqualTo(1L);
+        assertThat(resultado.getNombre()).isEqualTo("Bruno");
+        assertThat(resultado.getTipo()).isEqualTo("Perro");
+        assertThat(resultado.getEdad()).isEqualTo(6);
+        verify(mascotaRepository).findById(1L);
+        verify(mascotaRepository).save(mascotaNueva);
+     }
      
+     @Test
+     void testEliminarMascota() {
+        doNothing().when(mascotaRepository).deleteById(1L);
+
+        mascotaService.eliminarMascota(1L);
+        verify(mascotaRepository).deleteById(1L);
+     }
 }
